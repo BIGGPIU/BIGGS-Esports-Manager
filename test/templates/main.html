@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static "index.css"%}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% if restartsignal == 1%}
+        <meta http-equiv="refresh" content="0; url =../" />
+    {% endif %}
+
+    <title>BIGGS Esports Manager</title>
+</head>
+
+<html>
+    <body>
+        <div class="header font-arial">
+            <div class="headerc fl">BIGG's Esports Manager</div>
+            <div class="headerc fr">Created by BIGG</div>
+        </div>
+        <div class="container">
+            <form class="entermatch" id="entermatch">
+                <div class="innercontainer">
+                    <div class="lside">
+                        <div class="worl">Winner</div>
+                        <div class="fillright">
+                            <select id="player1" class="select" form="entermatch" name="player1">
+                                <option value="" default> </option>
+                                {% for i in Name%}
+                                <option value="{{i}}" name="{{i}}"> {{i}} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="rside">
+                        <div class="worl">Loser</div>
+                        <div class="fillright">
+                            <select id="player2" class="select" form="entermatch" name="player2">
+                                <option value="" default> </option>
+                                {% for i in Name%}
+                                <option value="{{i}}" name="{{i}}"> {{i}} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="submit">Submit</button>
+            </form>
+            <form class="createuser">
+                <div class="createtext">Create New User</div>
+                <input name="create" id="create" type="text">
+                <button type="submit" class="submit2">Submit</button>
+            </form>
+            
+            <h1>Leaderboard</h1>
+
+            <div class="leaderboard">
+                <div class="leaderboardheader">
+                    <div id="Name">Name</div>
+                    <div id="ELO">ELO</div>
+                    <div id="wins">Wins</div>
+                    <div id="losses">losses</div>
+                </div>
+                {% for key,value in leaderboardfill.items %}
+                <div class="leaderboardcontent"> 
+                    <div class="Name">{{value.Name}}</div>
+                    <div class="leaderboardinnercontent">{{value.ELO}}</div>
+                    <div class="leaderboardinnercontent">{{value.Wins}}</div>
+                    <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </body>
+</html>
+
+
+<!-- <select id="player1">
+    {% for i in Name%}
+    <option value="{{i}}">
+    {% endfor %}
+</select> -->
