@@ -112,11 +112,38 @@ def ADDgametodb(rawrequest):
     conn.commit()
 
     cursor.close()
+    UPDATERANKfromdb(winner)
+    UPDATERANKfromdb(loser)
     return
 
+def UPDATERANKfromdb(user1):
+    conn = sqlite3.connect("C:\\Users\\diyaj\\myenv\\EsportsManager\\db.sqlite3")
+    cursor = conn.cursor()
+    sql = f"SELECT ELO FROM USERS WHERE NAME='{user1}'"
+    cursor.execute(sql)
+    returned = cursor.fetchall()[0]
+    returned = returned[0]
+    if 1299 >= returned:
+        x = 1 # Wood
+    elif 1300 <= returned <= 1449:
+        x = 2 # Bronze
+    elif 1450 <= returned <= 1550:
+        x = 3 # Silver
+    elif 1551 <= returned <= 1650:
+        x = 4 # Diamond
+    elif 1651 <= returned <= 1700:
+        x = 5 # Platinum
+    elif 1700 < returned:
+        x = 6 # HOM
+    sql = f"UPDATE Users SET Rank='{x}' WHERE Name='{user1}'"
+    cursor.execute(sql)
+    conn.commit()
+    conn.close()
+
+    
 def GETallinfofromdb() -> dict:
     cursor = CreatesqliteOBJ()
-    sql = f"SELECT Name,Wins,Losses,ELO FROM Users"
+    sql = f"SELECT Name,Wins,Losses,ELO,Rank FROM Users"
     cursor.execute(sql)
     hold = cursor.fetchall()
     returndict = {}
@@ -128,6 +155,7 @@ def GETallinfofromdb() -> dict:
                 "Wins":i[1],
                 "Losses":i[2],
                 "ELO":i[3],
+                "Rank":i[4],
             }
         })
         z+=1
@@ -136,4 +164,4 @@ def GETallinfofromdb() -> dict:
     
 
 if __name__ == "__main__":
-    pass
+    UPDATERANKfromdb("BIGG")

@@ -63,12 +63,56 @@
                     <div id="losses">losses</div>
                 </div>
                 {% for key,value in leaderboardfill.items %}
+                {% if value.Rank == 1%}
+                <div class="leaderboardcontent" style="background-color:#CC4125"> 
+                    <div class="Name">{{value.Name}}</div>
+                    <div class="leaderboardinnercontent">{{value.ELO}}</div>
+                    <div class="leaderboardinnercontent">{{value.Wins}}</div>
+                    <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                </div>
+                {% elif value.Rank == 2%}
+                <div class="leaderboardcontent" style="background-color:#E69138"> 
+                    <div class="Name">{{value.Name}}</div>
+                    <div class="leaderboardinnercontent">{{value.ELO}}</div>
+                    <div class="leaderboardinnercontent">{{value.Wins}}</div>
+                    <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                </div>
+                {% elif value.Rank == 3%}
+                <div class="leaderboardcontent" style="background-color:#CCCCCC"> 
+                    <div class="Name">{{value.Name}}</div>
+                    <div class="leaderboardinnercontent">{{value.ELO}}</div>
+                    <div class="leaderboardinnercontent">{{value.Wins}}</div>
+                    <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                </div>
+                {% elif value.Rank == 4%}
+                <div class="leaderboardcontent" style="background-color:#4285F4"> 
+                    <div class="Name">{{value.Name}}</div>
+                    <div class="leaderboardinnercontent">{{value.ELO}}</div>
+                    <div class="leaderboardinnercontent">{{value.Wins}}</div>
+                    <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                </div>
+                {% elif value.Rank == 5%}
+                <div class="leaderboardcontent" style="background-color:#00FFFF"> 
+                    <div class="Name">{{value.Name}}</div>
+                    <div class="leaderboardinnercontent">{{value.ELO}}</div>
+                    <div class="leaderboardinnercontent">{{value.Wins}}</div>
+                    <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                </div>
+                {% elif value.Rank == 6%}
+                <div class="leaderboardcontent" style="background-color:#F1C232"> 
+                    <div class="Name">{{value.Name}}</div>
+                    <div class="leaderboardinnercontent">{{value.ELO}}</div>
+                    <div class="leaderboardinnercontent">{{value.Wins}}</div>
+                    <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                </div>
+                {% else %}
                 <div class="leaderboardcontent"> 
                     <div class="Name">{{value.Name}}</div>
                     <div class="leaderboardinnercontent">{{value.ELO}}</div>
                     <div class="leaderboardinnercontent">{{value.Wins}}</div>
                     <div class="leaderboardinnercontent">{{value.Losses}}</div>
                 </div>
+                {%endif%}
                 {% endfor %}
             </div>
         </div>
