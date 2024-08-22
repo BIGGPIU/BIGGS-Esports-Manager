@@ -17,10 +17,12 @@ def index(request):
     template = loader.get_template("main.html")
     namelist = GETnamesFROMdb()
     allinfo = GETallinfofromdb()
+    spinfo = GETallSPinfofromdb()
     context = {
         "Name":namelist,
         "restartsignal":0,
-        "leaderboardfill":allinfo
+        "leaderboardfill":allinfo,
+        "spleaderboardfill":spinfo
                }
 
     if "create" in request.GET.keys():
@@ -28,6 +30,9 @@ def index(request):
         context["restartsignal"] = 1
     if "player1" in request.GET.keys():
         ADDgametodb(request.GET)
+        context["restartsignal"] = 1
+    if "tournament" in request.GET.keys():
+        ADDSPtodb(request.GET)
         context["restartsignal"] = 1
 
     return HttpResponse(template.render(context,request))

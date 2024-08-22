@@ -53,57 +53,84 @@
                 <button type="submit" class="submit2">Submit</button>
             </form>
             
-            <h1>Leaderboard</h1>
+            <h1>Record Tournament Matches</h1>
+
+            <form class="inputtournament">
+                <select id="username" name="tournament">
+                    <option value="" default> </option>
+                    {% for i in Name%}
+                    <option value="{{i}}" name="{{i}}"> {{i}} </option>
+                    {% endfor %}
+                </select>
+                <select id="username" name="placement">
+                    <option value="Did Not Place" default>Did Not Place</option>
+                    <option value="1" name="1">1st</option>
+                    <option value="2" name="2">2nd</option>
+                    <option value="3" name="3">3rd</option>
+                    <option value="4" name="4">pre Q final win</option>
+                </select>
+                <button type="submit" class="submit3">Submit</button>
+
+            </form>
+
+            <h1>ELO Leaderboard</h1>
 
             <div class="leaderboard">
                 <div class="leaderboardheader">
                     <div id="Name">Name</div>
                     <div id="ELO">ELO</div>
                     <div id="wins">Wins</div>
-                    <div id="losses">losses</div>
+                    <div id="losses">Losses</div>
+                    <div id="Rank">Rank</div> 
                 </div>
                 {% for key,value in leaderboardfill.items %}
                 {% if value.Rank == 1%}
-                <div class="leaderboardcontent" style="background-color:#CC4125"> 
+                <div class="leaderboardcontent" > 
                     <div class="Name">{{value.Name}}</div>
                     <div class="leaderboardinnercontent">{{value.ELO}}</div>
                     <div class="leaderboardinnercontent">{{value.Wins}}</div>
                     <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                    <div class="Rank"  style="background-color:#CC4125">Wood</div>
                 </div>
                 {% elif value.Rank == 2%}
-                <div class="leaderboardcontent" style="background-color:#E69138"> 
+                <div class="leaderboardcontent" > 
                     <div class="Name">{{value.Name}}</div>
                     <div class="leaderboardinnercontent">{{value.ELO}}</div>
                     <div class="leaderboardinnercontent">{{value.Wins}}</div>
                     <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                    <div class="Rank" style="background-color:#E69138">Bronze</div>
                 </div>
                 {% elif value.Rank == 3%}
-                <div class="leaderboardcontent" style="background-color:#CCCCCC"> 
+                <div class="leaderboardcontent" > 
                     <div class="Name">{{value.Name}}</div>
                     <div class="leaderboardinnercontent">{{value.ELO}}</div>
                     <div class="leaderboardinnercontent">{{value.Wins}}</div>
                     <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                    <div class="Rank" style="background-color:#CCCCCC">Silver</div>
                 </div>
                 {% elif value.Rank == 4%}
-                <div class="leaderboardcontent" style="background-color:#4285F4"> 
+                <div class="leaderboardcontent" > 
                     <div class="Name">{{value.Name}}</div>
                     <div class="leaderboardinnercontent">{{value.ELO}}</div>
                     <div class="leaderboardinnercontent">{{value.Wins}}</div>
                     <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                    <div class="Rank" style="background-color:#4285F4">Diamond</div>
                 </div>
                 {% elif value.Rank == 5%}
-                <div class="leaderboardcontent" style="background-color:#00FFFF"> 
+                <div class="leaderboardcontent" > 
                     <div class="Name">{{value.Name}}</div>
                     <div class="leaderboardinnercontent">{{value.ELO}}</div>
                     <div class="leaderboardinnercontent">{{value.Wins}}</div>
                     <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                    <div class="Rank" style="background-color:#00FFFF">Platinum</div>
                 </div>
                 {% elif value.Rank == 6%}
-                <div class="leaderboardcontent" style="background-color:#F1C232"> 
+                <div class="leaderboardcontent" style=""> 
                     <div class="Name">{{value.Name}}</div>
                     <div class="leaderboardinnercontent">{{value.ELO}}</div>
                     <div class="leaderboardinnercontent">{{value.Wins}}</div>
                     <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                    <div class="Rank" style="background-color:#F1C232">HOM</div>
                 </div>
                 {% else %}
                 <div class="leaderboardcontent"> 
@@ -111,9 +138,35 @@
                     <div class="leaderboardinnercontent">{{value.ELO}}</div>
                     <div class="leaderboardinnercontent">{{value.Wins}}</div>
                     <div class="leaderboardinnercontent">{{value.Losses}}</div>
+                    <div class="Rank">Unranked</div>
                 </div>
                 {%endif%}
                 {% endfor %}
+            </div>
+
+            <h1 id="spleaderboard">SP Leaderboard</h1>
+            
+            <div class="leaderboard">
+                <div class="leaderboardheader">
+                    <div id="SPName">Name</div>
+                    <div id="SP">SP</div>
+                    <div class="placements">Firsts</div>
+                    <div class="placements">Seconds</div>
+                    <div class="placements">Thirds</div>
+                    <div class="placements">DNP</div>
+                    <div id="RMP">Multiplier</div> 
+                </div>
+                {% for key,value in spleaderboardfill.items %}
+                <div class="leaderboardcontent" > 
+                    <div id="SPName">{{ value.Name }}</div>
+                    <div id="SP">{{ value.SP }}</div>
+                    <div class="placements">{{ value.1st }}</div>
+                    <div class="placements">{{ value.2nd }}</div>
+                    <div class="placements">{{ value.3rd }}</div>
+                    <div class="placements">{{ value.DNP }}</div>
+                    <div id="RMP">{{ value.Multiplier }}x</div>
+                </div>
+                {%endfor%}
             </div>
         </div>
 
