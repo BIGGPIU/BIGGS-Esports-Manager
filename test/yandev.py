@@ -153,12 +153,12 @@ def ADDgametodb(rawrequest):
         loserrecent = GETrecentfromdb(cursor,loser)
     except:
         loserrecent = ["Nobody",1]
-    if loserrecent[0] == loser:
+    if loserrecent[0] == winner:
         loserrecent[1] = int(loserrecent[1])
         loserrecent[1] += 1
         loserdfactor = loserrecent[1]
     else:
-        loserrecent[0] = loser
+        loserrecent[0] = winner
         winnerrecent[1] = 1
         loserdfactor = 1
 
@@ -226,6 +226,8 @@ def GETrecentfromdb(cursorobj,usr):
     cursorobj.execute(sql)
     hold = cursorobj.fetchone()[0]
     hold = hold.split(",")
+    for i in range(len(hold)):
+        hold[i] = strip(hold[i])
     return hold
 
 
@@ -236,17 +238,17 @@ def UPDATERANKfromdb(user1):
     cursor.execute(sql)
     returned = cursor.fetchall()[0]
     returned = returned[0]
-    if 1299 >= returned:
+    if 800 >= returned:
         x = 1 # Wood
-    elif 1300 <= returned <= 1449:
+    elif 801 <= returned <= 1200:
         x = 2 # Bronze
-    elif 1450 <= returned <= 1550:
+    elif 1201 <= returned <= 1700:
         x = 3 # Silver
-    elif 1551 <= returned <= 1650:
+    elif 1701 <= returned <= 1900:
         x = 4 # Diamond
-    elif 1651 <= returned <= 1700:
+    elif 1901 <= returned <= 2300:
         x = 5 # Platinum
-    elif 1700 < returned:
+    elif 2301 < returned:
         x = 6 # HOM
     sql = f"UPDATE Users SET Rank='{x}' WHERE Name='{user1}'"
     cursor.execute(sql)
@@ -298,4 +300,4 @@ def GETallSPinfofromdb():
     
 
 if __name__ == "__main__":
-    ADDgametodb({"player1":["BIGG"],"player2":["BIGGRNKR"]})
+    ADDgametodb({"player1":["Corbin"],"player2":["Raiju"]})
