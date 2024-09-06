@@ -34,5 +34,8 @@ def index(request):
     if "tournament" in request.GET.keys():
         ADDSPtodb(request.GET)
         context["restartsignal"] = 1
+    if "CreateNewRatingPeriod" in request.GET.keys():
+        UPDATErankperiod()
+        context["restartsignal"] = 1
 
     return HttpResponse(template.render(context,request))

@@ -298,6 +298,80 @@ def GETallSPinfofromdb():
         z+=1
     return returndict
     
+def UPDATErankperiod() -> None:
+    cursor = CreatesqliteOBJ()
+    sql = "SELECT * FROM Users"
+    cursor.execute(sql)
+    allusers = cursor.fetchall()
+    userdict = {}
+    x = 0 
+    for i in allusers:
+        sql = f"SELECT * FROM Series WHERE Name='{i[0]}'"
+        cursor.execute(sql)
+        series = cursor.fetchall()
+        userdict.update({
+            f"{x}":{"User":i[0],
+            "Wins":i[1],
+            "Losses":i[2],
+            "ELO":i[3],
+            "Rank":i[5],
+            "1st":series[0][2],
+            "2nd":series[0][3],
+            "3rd":series[0][4],
+            "DNP":series[0][5]}
+        })
+        x+=1
+    
+    ClosesqliteOBJ(cursor)
+
+    conn = sqlite3.connect("C:\\Users\\diyaj\\myenv\\EsportsManager\\db.sqlite3")
+    cursor = conn.cursor()
+
+    
+    for i in userdict:
+        donotedit = False
+        try:
+            sql = f"SELECT * FROM UserHistory WHERE Username='{userdict[i]['User']}'"
+            cursor.execute(sql)
+            hold = cursor.fetchall()
+            hold = hold[0]
+            elohistory = hold[1]
+        except:
+            sql = f"INSERT INTO UserHistory VALUES ('{userdict[i]['User']}','{userdict[i]['ELO']}','{userdict[i]['Wins']}','{userdict[i]['Losses']}','{userdict[i]['1st']}','{userdict[i]['2nd']}','{userdict[i]['3rd']}','{userdict[i]['DNP']}')"                                                                                
+            cursor.execute(sql)
+            conn.commit()
+            sql = f"SELECT * FROM UserHistory WHERE Username='{userdict[i]['User']}'"
+            cursor.execute(sql)
+            hold = cursor.fetchall()
+            hold = hold[0]
+            elohistory = hold[1]
+            donotedit = True
+        if donotedit == False:
+            elohistory += f",{userdict[i]['ELO']}"
+            winhistory = hold[2]
+            winhistory += f",{userdict[i]['Wins']}"
+            losshistory = hold[3]
+            losshistory += f",{userdict[i]['Losses']}"
+            firsthistory = hold[4]
+            firsthistory += f",{userdict[i]['1st']}"
+            secondhistory = hold[5]
+            secondhistory += f",{userdict[i]['2nd']}"
+            thirdhistory = hold[6]
+            thirdhistory += f",{userdict[i]['3rd']}"
+            DNP = hold[7]
+            DNP += f",{userdict[i]['DNP']}"
+
+            sql = f"UPDATE UserHistory SET EloHistory='{elohistory}', WinHistory='{winhistory}', LossHistory='{losshistory}', FirstHistory='{firsthistory}', SecondHistory='{secondhistory}', ThirdHistory='{thirdhistory}', DnpHistory='{DNP}' WHERE Username='{userdict[i]['User']}'"
+            cursor.execute(sql)
+            conn.commit()
+
+        
+
+        
+
+
+
+            
 
 if __name__ == "__main__":
-    ADDgametodb({"player1":["Corbin"],"player2":["Raiju"]})
+    UPDATErankperiod()

@@ -379,3 +379,13 @@ h1 {
 }
 
 
+.CNRP {
+    position:relative;
+    font-size: 32px;
+    left:50%;
+    transform: translateX(-50%);
+    width:28%;
+    height:50%;
+    border: 0;
+    border-radius: 0px;
+}
