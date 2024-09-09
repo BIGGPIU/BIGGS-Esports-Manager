@@ -389,3 +389,11 @@ h1 {
     border: 0;
     border-radius: 0px;
 }
+
+#side {
+    position:absolute;
+    left:16%;
+    top:34%;
+    transform: translateY(-50%);
+    height:50%;
+}

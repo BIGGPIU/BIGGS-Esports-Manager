@@ -32,7 +32,10 @@ def index(request):
         ADDgametodb(request.GET)
         context["restartsignal"] = 1
     if "tournament" in request.GET.keys():
-        ADDSPtodb(request.GET)
+        if request.GET["side"] == "true":
+            ADDSPtodb(request.GET,True)
+        else:    
+            ADDSPtodb(request.GET)
         context["restartsignal"] = 1
     if "CreateNewRatingPeriod" in request.GET.keys():
         UPDATErankperiod()

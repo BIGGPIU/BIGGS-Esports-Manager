@@ -71,7 +71,7 @@ def CREATEuserindb(rawrequest):
     conn.commit()
     cursor.close()
 
-def ADDSPtodb(rawrequest):
+def ADDSPtodb(rawrequest,dilute=False):
     temp = dict(rawrequest)
     name = temp.get("tournament")[0]
     placement = temp.get("placement")[0]
@@ -86,23 +86,39 @@ def ADDSPtodb(rawrequest):
     third = int(hold[3])
     participated = int(hold[4])
     rmp = GETrmp(cursor,name)
-    if placement == "Did Not Place":
-        points = 1
-        participated += 1
-    elif placement == "1":
-        points = 5
-        first += 1
-    elif placement == "2":
-        points = 4
-        second += 1
-    elif placement == "3":
-        points = 3
-        third += 1
-    elif placement == "4":
-        points = 2
-        participated += 1
+    if dilute == False:
+        if placement == "Did Not Place":
+            points = 1
+            participated += 1
+        elif placement == "1":
+            points = 5
+            first += 1
+        elif placement == "2":
+            points = 4
+            second += 1
+        elif placement == "3":
+            points = 3
+            third += 1
+        elif placement == "4":
+            points = 2
+            participated += 1
+    else:
+        if placement == "Did Not Place":
+            points = 1
+        elif placement == "1":
+            points = 2
+            first += 1
+        elif placement == "2":
+            points = 2
+            second += 1
+        elif placement == "3":
+            points = 2
+            third += 1
+        elif placement == "4":
+            points = 1
+            participated += 1
     SP += int(points*rmp)
-    sql = f"UPDATE Series SET SP='{SP}', TOPONE='{first}', TOPTWO='{second}', TOPTHREE='{third}',PARTICIPATED='{participated}',RankMultiplier='{rmp}'"
+    sql = f"UPDATE Series SET SP='{SP}', TOPONE='{first}', TOPTWO='{second}', TOPTHREE='{third}',PARTICIPATED='{participated}',RankMultiplier='{rmp}' WHERE Name='{name}'"
     cursor.execute(sql)
     conn.commit()
 
